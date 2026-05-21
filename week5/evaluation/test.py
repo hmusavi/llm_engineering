@@ -15,6 +15,22 @@ class TestQuestion(BaseModel):
 
 
 def load_tests() -> list[TestQuestion]:
+    """
+    Load test questions from a JSONL file.
+    Reads a JSONL (JSON Lines) file where each line contains a JSON object representing
+    a test question. Each JSON object is parsed and unpacked into a TestQuestion instance
+    using the dictionary unpacking operator (**data).
+    The **data syntax is used for dictionary unpacking, which passes the key-value pairs
+    from the 'data' dictionary as keyword arguments to the TestQuestion constructor.
+    For example, if data = {"question": "What?", "answer": "42"}, then TestQuestion(**data)
+    is equivalent to TestQuestion(question="What?", answer="42").
+    Returns:
+        list[TestQuestion]: A list of TestQuestion objects loaded from the JSONL file.
+    Raises:
+        FileNotFoundError: If TEST_FILE does not exist.
+        json.JSONDecodeError: If a line in the file contains invalid JSON.
+        TypeError: If the JSON data cannot be unpacked into TestQuestion parameters.
+    """
     """Load test questions from JSONL file."""
     tests = []
     with open(TEST_FILE, "r", encoding="utf-8") as f:
